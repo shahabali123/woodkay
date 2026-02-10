@@ -1,0 +1,77 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { blogData } from './blogData';
+
+const BlogPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Sort articles: Newest first
+  const sortedArticles = [...blogData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentArticles = sortedArticles.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedArticles.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  return (
+    <div className="container py-5">
+      <div className="text-center mb-5">
+        <h1 className="fw-bold display-4">Woodworking Blog</h1>
+        <p className="lead text-muted">Tips, tricks, and tutorials for your next build.</p>
+      </div>
+
+      <div className="row g-4">
+        {currentArticles.map((article) => (
+          <div className="col-md-6 col-lg-4" key={article.id}>
+            <div className="card h-100 shadow-sm border-0">
+              <img src={article.image} className="card-img-top" alt={article.title} style={{ height: '200px', objectFit: 'cover' }} />
+              <div className="card-body d-flex flex-column">
+                <small className="text-muted mb-2">{new Date(article.date).toLocaleDateString()}</small>
+                <h5 className="card-title fw-bold">{article.title}</h5>
+                <p className="card-text text-secondary flex-grow-1">{article.excerpt}</p>
+                <Link to={`/blog/${article.id}`} className="btn btn-outline-dark mt-3 align-self-start" style={{ borderColor: 'var(--wk-orange)', color: 'var(--wk-orange)' }}>
+                  Read Article
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <nav className="mt-5 d-flex justify-content-center">
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage - 1)} style={{ color: 'var(--wk-dark)' }}>
+                Previous
+              </button>
+            </li>
+            {[...Array(totalPages)].map((_, index) => (
+              <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                <button 
+                  className="page-link" 
+                  onClick={() => paginate(index + 1)}
+                  style={currentPage === index + 1 ? { backgroundColor: 'var(--wk-orange)', borderColor: 'var(--wk-orange)', color: 'white' } : { color: 'var(--wk-dark)' }}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage + 1)} style={{ color: 'var(--wk-dark)' }}>
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </div>
+  );
+};
+
+export default BlogPage;
