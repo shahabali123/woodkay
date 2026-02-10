@@ -28,9 +28,7 @@ const SingleBlog = () => {
           
           <img src={article.image} alt={article.title} className="img-fluid rounded shadow-sm mb-5 w-100" />
           
-          <div className="article-content fs-5 lh-lg" style={{ color: '#333' }}>
-            {article.content}
-          </div>
+          <div className="article-content fs-5 lh-lg" style={{ color: '#333' }} dangerouslySetInnerHTML={{ __html: article.content }} />
         </div>
       </div>
     </div>

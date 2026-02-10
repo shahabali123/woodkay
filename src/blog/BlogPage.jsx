@@ -27,17 +27,19 @@ const BlogPage = () => {
       <div className="row g-4">
         {currentArticles.map((article) => (
           <div className="col-md-6 col-lg-4" key={article.id}>
-            <div className="card h-100 shadow-sm border-0">
-              <img src={article.image} className="card-img-top" alt={article.title} style={{ height: '200px', objectFit: 'cover' }} />
-              <div className="card-body d-flex flex-column">
-                <small className="text-muted mb-2">{new Date(article.date).toLocaleDateString()}</small>
-                <h5 className="card-title fw-bold">{article.title}</h5>
-                <p className="card-text text-secondary flex-grow-1">{article.excerpt}</p>
-                <Link to={`/blog/${article.id}`} className="btn btn-outline-dark mt-3 align-self-start" style={{ borderColor: 'var(--wk-orange)', color: 'var(--wk-orange)' }}>
-                  Read Article
-                </Link>
+            <Link to={`/blog/${article.id}`} className="text-decoration-none h-100 d-block" style={{ color: 'inherit' }}>
+              <div className="card h-100 shadow-sm border-0">
+                <img src={article.image} className="card-img-top" alt={article.title} style={{ height: '200px', objectFit: 'cover' }} />
+                <div className="card-body d-flex flex-column">
+                  <small className="text-muted mb-2">{new Date(article.date).toLocaleDateString()}</small>
+                  <h5 className="card-title fw-bold">{article.title}</h5>
+                  <p className="card-text text-secondary flex-grow-1">{article.excerpt}</p>
+                  <div className="btn btn-outline-dark mt-3 align-self-start" style={{ borderColor: 'var(--wk-orange)', color: 'var(--wk-orange)' }}>
+                    Read Article
+                  </div>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>
@@ -47,7 +49,7 @@ const BlogPage = () => {
         <nav className="mt-5 d-flex justify-content-center">
           <ul className="pagination">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => paginate(currentPage - 1)} style={{ color: 'var(--wk-dark)' }}>
+              <button className="page-link" onClick={() => paginate(currentPage - 1)}>
                 Previous
               </button>
             </li>
@@ -56,14 +58,14 @@ const BlogPage = () => {
                 <button 
                   className="page-link" 
                   onClick={() => paginate(index + 1)}
-                  style={currentPage === index + 1 ? { backgroundColor: 'var(--wk-orange)', borderColor: 'var(--wk-orange)', color: 'white' } : { color: 'var(--wk-dark)' }}
+                  style={currentPage === index + 1 ? { backgroundColor: 'var(--wk-orange)', borderColor: 'var(--wk-orange)', color: 'white' } : {}}
                 >
                   {index + 1}
                 </button>
               </li>
             ))}
             <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => paginate(currentPage + 1)} style={{ color: 'var(--wk-dark)' }}>
+              <button className="page-link" onClick={() => paginate(currentPage + 1)}>
                 Next
               </button>
             </li>
