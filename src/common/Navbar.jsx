@@ -149,6 +149,19 @@ const Navbar = () => {
                 About Us
               </NavLink>
             </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{color: COLORS.dark, fontWeight: 600}}>
+                More
+              </a>
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li>
+                  <NavLink className="dropdown-item" to="/terms-of-service" onClick={handleNavLinkClick}>Terms of Service</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item" to="/privacy-policy" onClick={handleNavLinkClick}>Privacy Policy</NavLink>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

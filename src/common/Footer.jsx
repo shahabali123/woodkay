@@ -23,7 +23,7 @@ const Footer = () => {
               Discover
             </h5>
             <p>
-              <Link to="/plans" className="text-decoration-none" style={{ color: 'var(--wk-cream)' }}>Free Plans</Link>
+              <Link to="/products" className="text-decoration-none" style={{ color: 'var(--wk-cream)' }}>Recommended Gear</Link>
             </p>
             <p>
               <Link to="/blog" className="text-decoration-none" style={{ color: 'var(--wk-cream)' }}>Tutorials</Link>
@@ -67,7 +67,9 @@ const Footer = () => {
           </div>
           <div className="col-md-5 col-lg-4">
             <p className="text-center text-md-end">
-               <a href="#" style={{ color: 'var(--wk-orange)', textDecoration: 'none' }}>Privacy Policy</a>
+               <Link to="/privacy-policy" style={{ color: 'var(--wk-orange)', textDecoration: 'none' }}>Privacy Policy</Link>
+               <span className="mx-2" style={{color: 'var(--wk-cream)'}}>|</span>
+               <Link to="/terms-of-service" style={{ color: 'var(--wk-orange)', textDecoration: 'none' }}>Terms of Service</Link>
             </p>
           </div>
         </div>

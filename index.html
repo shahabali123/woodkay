@@ -21,6 +21,19 @@
       referrerpolicy="no-referrer"
     />
     <meta name="google-site-verification" content="MfrwdXRy6IoDaE1qU6Kd7i249TruVz2NEkTKaG-XJv8" />
+    <!-- Google Publisher Center Script -->
+    <script async type="application/javascript"
+        src="https://news.google.com/swg/js/v1/swg-basic.js"></script>
+    <script>
+      (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+        basicSubscriptions.init({
+          type: "NewsArticle",
+          isPartOfType: ["Product"],
+          isPartOfProductId: "CAowparEDA:openaccess",
+          clientOptions: { theme: "light", lang: "en" },
+        });
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
