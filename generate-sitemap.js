@@ -7,7 +7,7 @@ import { blogData } from './src/blog/blogData.js';
 import { productData } from './src/product/productData.js';
 
 // Configuration
-const DOMAIN = 'https://woodkay.com'; // TODO: Replace with your actual domain
+const DOMAIN = 'https://woodkay.netlify.app';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
@@ -72,6 +72,11 @@ const generateSitemap = () => {
   // Write sitemap.xml
   fs.writeFileSync(path.join(PUBLIC_DIR, 'sitemap.xml'), sitemap);
   console.log(`✅ Sitemap generated with ${urls.length} links at public/sitemap.xml`);
+
+  // Generate robots.txt
+  const robotsTxt = `User-agent: *\nAllow: /\nSitemap: ${DOMAIN}/sitemap.xml`;
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'robots.txt'), robotsTxt);
+  console.log(`✅ robots.txt generated at public/robots.txt`);
 };
 
 // Execute
