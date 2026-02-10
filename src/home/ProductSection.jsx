@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { productData } from '../product/productData';
+import { productData } from '../product/productData.js';
 
 // Get the last 3 products to feature on the home page
 const featuredProducts = productData.slice(-3);
@@ -11,23 +11,36 @@ const ProductSection = () => {
     cream: '#FAF3E1',
   };
 
+  const cardStyle = {
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  };
+
   return (
     <div className="py-5" style={{ backgroundColor: COLORS.cream, clipPath: 'polygon(0 5%, 100% 0, 100% 95%, 0 100%)' }}>
       <div className="container px-4 py-5" id="featured-products">
         <div className="text-center mb-5">
           <h2 className="fw-bold display-5">Recommended Gear</h2>
           <p className="lead text-muted">Our favorite tools and supplies to get the job done</p>
+          <style>
+            {`
+              .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+              }
+              .card-hover:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+              }
+            `}
+          </style>
         </div>
         <div className="row g-5 py-5 row-cols-1 row-cols-lg-3">
           {featuredProducts.map((product) => (
             <div className="col" key={product.id}>
-              <div
-                className="card h-100 shadow-sm border-0"
-                style={{ transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
-                onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.classList.add('shadow-lg'); }}
-                onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.classList.remove('shadow-lg'); }}
-              >
+            <Link to={`/products/${product.id}`} className="text-decoration-none h-100 d-block" style={{ color: 'inherit' }}>
+              <div className="card h-100 shadow-sm border-0 card-hover">
                 <img src={product.image} className="card-img-top" alt={product.name} style={{ height: '225px', objectFit: 'cover' }} />
+
+
                 <div className="position-absolute top-0 end-0 m-2">
                   <span className="badge bg-dark fs-6">{product.price}</span>
                 </div>
@@ -35,12 +48,11 @@ const ProductSection = () => {
                   <h5 className="card-title fw-bold">{product.name}</h5>
                   <p className="card-text flex-grow-1 text-secondary">{product.description}</p>
                   <div className="mt-auto">
-                    <Link to={`/products/${product.id}`} className="btn fw-bold w-100" style={{backgroundColor: COLORS.orange, color: 'white'}}>
-                      View Details
-                    </Link>
+                    
                   </div>
                 </div>
               </div>
+              </Link>
             </div>
           ))}
         </div>

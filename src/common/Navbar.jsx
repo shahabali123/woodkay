@@ -58,21 +58,51 @@ const Navbar = () => {
     }
   };
 
-  const navLinkStyle = ({ isActive }) => ({
-    color: isActive ? COLORS.orange : COLORS.dark,
-    fontWeight: 600,
-  });
-
-  const navLinkCTAStyle = {
-    backgroundColor: COLORS.orange,
-    color: 'white',
-    fontWeight: 600,
-  };
-
   return (
-    <nav className="navbar navbar-expand-lg sticky-top shadow-sm" style={{ backgroundColor: COLORS.cream }}>
-      <div className="container-fluid" style={{ maxWidth: '1200px' }}>
-        <Link className="navbar-brand" to="/" style={{ color: COLORS.dark, fontWeight: 800, fontSize: '1.8rem', textDecoration: 'none' }}>
+    <nav className="navbar navbar-expand-lg sticky-top shadow-sm bg-white py-3">
+      <style>
+        {`
+          .nav-link-custom {
+            color: ${COLORS.dark};
+            font-weight: 500;
+            padding: 0.5rem 1.5rem !important; /* Match px-4 from active state */
+            transition: color 0.3s ease;
+            white-space: nowrap;
+          }
+          .nav-link-custom:hover {
+            color: ${COLORS.orange} !important;
+          }
+          .search-container {
+            border: 1px solid #eee;
+            border-radius: 50px;
+            padding: 0.25rem 1rem;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+          }
+          .search-container:focus-within {
+            background: #fff;
+            border-color: ${COLORS.orange};
+            box-shadow: 0 0 0 4px rgba(250, 129, 18, 0.1);
+          }
+          .search-input {
+            border: none;
+            background: transparent;
+            box-shadow: none !important;
+          }
+          .btn-cta {
+            background-color: ${COLORS.orange};
+            color: white !important;
+            transition: transform 0.2s;
+          }
+          .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(250, 129, 18, 0.3);
+          }
+        `}
+      </style>
+      <div className="container">
+        <Link className="navbar-brand d-flex align-items-center gap-2" to="/" style={{ color: COLORS.dark, fontWeight: 800, fontSize: '1.8rem', textDecoration: 'none' }}>
+          <i className="fas fa-tree" style={{ color: COLORS.orange }}></i>
           Wood<span style={{ color: COLORS.orange }}>Kay</span>
         </Link>
         <button
@@ -93,12 +123,12 @@ const Navbar = () => {
         </button>
         <div ref={collapseNavbarRef} className="collapse navbar-collapse" id="navbarNav">
           {/* Search Bar */}
-          <div className="mx-auto my-2 my-lg-0 position-relative" style={{ flexBasis: '40%' }}>
-            <div className="input-group">
-              <span className="input-group-text bg-white border-end-0"><i className="fas fa-search"></i></span>
+          <div className="mx-auto my-3 my-lg-0 position-relative w-100" style={{ maxWidth: '500px' }}>
+            <div className="d-flex align-items-center search-container">
+              <i className="fas fa-search text-muted me-2"></i>
               <input
                 type="text"
-                className="form-control border-start-0 shadow-none"
+                className="form-control search-input p-1"
                 placeholder="Search articles & gear..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -109,16 +139,21 @@ const Navbar = () => {
             {isSearchFocused && query.trim() !== '' && (
               <ul className="list-group position-absolute w-100 shadow-lg" style={{ zIndex: 1001, top: '100%' }}>
                 {results.length > 0 ? (
-                  results.map((item) => (
-                    <Link 
-                      key={`${item.type}-${item.id}`} 
-                      to={item.path} 
-                      className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+                  results.map(item => (
+                    <Link
+                      key={`${item.type}-${item.id}`}
+                      to={item.path}
+                      className="list-group-item list-group-item-action"
                       onClick={handleResultClick}
                       onMouseDown={(e) => e.preventDefault()}
                     >
-                      <div>{item.title || item.name}</div>
-                      <span className={`badge rounded-pill ${item.type === 'Blog' ? 'bg-info' : 'bg-secondary'}`}>{item.type}</span>
+                      <div className="d-flex align-items-center">
+                        <img src={item.image} alt={item.title || item.name} className="me-3 rounded" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                        <div className="flex-grow-1">
+                          <div className="fw-bold">{item.title || item.name}</div>
+                          <small className="text-muted">{item.type}</small>
+                        </div>
+                      </div>
                     </Link>
                   ))
                 ) : noResults && (
@@ -130,27 +165,27 @@ const Navbar = () => {
 
           <ul className="navbar-nav ms-auto align-items-center gap-lg-3">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/" style={navLinkStyle} onClick={handleNavLinkClick} end>
+              <NavLink className={({ isActive }) => isActive ? 'nav-link btn btn-cta rounded-pill px-4 py-2 fw-bold' : 'nav-link nav-link-custom'} to="/" onClick={handleNavLinkClick} end>
                 Home
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/products" style={navLinkStyle} onClick={handleNavLinkClick}>
+              <NavLink className={({ isActive }) => isActive ? 'nav-link btn btn-cta rounded-pill px-4 py-2 fw-bold' : 'nav-link nav-link-custom'} to="/products" onClick={handleNavLinkClick}>
                 Recommended Gear
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/blog" style={navLinkStyle} onClick={handleNavLinkClick}>
+              <NavLink className={({ isActive }) => isActive ? 'nav-link btn btn-cta rounded-pill px-4 py-2 fw-bold' : 'nav-link nav-link-custom'} to="/blog" onClick={handleNavLinkClick}>
                 Tutorials
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link btn rounded-pill px-4 py-2" to="/about" style={navLinkCTAStyle} onClick={handleNavLinkClick}>
+              <NavLink className={({ isActive }) => isActive ? 'nav-link btn btn-cta rounded-pill px-4 py-2 fw-bold' : 'nav-link nav-link-custom'} to="/about" onClick={handleNavLinkClick}>
                 About Us
               </NavLink>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style={{color: COLORS.dark, fontWeight: 600}}>
+              <a className="nav-link nav-link-custom dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 More
               </a>
               <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

@@ -19,6 +19,17 @@ const BlogPage = () => {
 
   return (
     <div className="container py-5">
+      <style>
+        {`
+          .card-hover {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+          }
+          .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+          }
+        `}
+      </style>
       <div className="text-center mb-5">
         <h1 className="fw-bold display-4">Woodworking Blog</h1>
         <p className="lead text-muted">Tips, tricks, and tutorials for your next build.</p>
@@ -28,7 +39,7 @@ const BlogPage = () => {
         {currentArticles.map((article) => (
           <div className="col-md-6 col-lg-4" key={article.id}>
             <Link to={`/blog/${article.id}`} className="text-decoration-none h-100 d-block" style={{ color: 'inherit' }}>
-              <div className="card h-100 shadow-sm border-0">
+              <div className="card h-100 shadow-sm border-0 card-hover">
                 <img src={article.image} className="card-img-top" alt={article.title} style={{ height: '200px', objectFit: 'cover' }} />
                 <div className="card-body d-flex flex-column">
                   <small className="text-muted mb-2">{new Date(article.date).toLocaleDateString()}</small>
