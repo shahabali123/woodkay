@@ -19,7 +19,7 @@ const AboutUs = () => {
           {/* Image */}
           <div className="col-lg-6">
             <img 
-              src="https://images.unsplash.com/photo-1595803549343-a253a4a0763e?q=80&w=1974&auto=format&fit=crop" 
+              src="/media/images/hero.jpg" 
               className="img-fluid rounded shadow-lg" 
               alt="Woodworker in a workshop" 
             />
